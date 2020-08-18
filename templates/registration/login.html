@@ -1,0 +1,49 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	{% if form.errors %}
+		<p>Your username and password didn't match. Please try again.</p>
+	{% endif %}
+	
+	{% if next %}
+		{% if user.is_authenticated %}
+			<p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+		{% else %}
+		<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+			<p class="display-1" style="background-color:white;border-radius:5px;color:#3a6342; padding-bottom:10px;">Login / Sign Up</p>
+		</div>
+		{% endif %}
+	{% else %}
+	<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<p class="display-1" style="background-color:white;border-radius:5px;color:#3a6342; padding-bottom:10px;">Login / Sign Up</p>
+	</div>
+	{% endif %}
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;">
+				<form method="post" action="{% url 'login' %}" style="background-color:white;border-radius:5px;color:#3a6342; padding:10px;margin-top:10px;">
+					{% csrf_token %}
+					<table style="width:80%;margin:15px;font-size:25px;padding-top:10px;">
+						<tr>
+							<td style="width:50%;text-align:right;padding-right:20px;">{{ form.username.label_tag }}</td>
+							<td style="text-align:left;">{{ form.username }}</td>
+						</tr>
+						<tr>
+							<td style="width:50%;text-align:right;padding-right:20px;">{{ form.password.label_tag }}</td>
+							<td style="text-align:left;">{{ form.password }}</td>
+						</tr>
+					</table>
+					<input class="nav-link active" type="submit" value="Login" style="border-color:#3a6342;border-width:1px;border-radius:5px;margin-left:40%;font-size:20px;"/>
+					<input type="hidden" name="next" value="{{ next }}" />
+				</form>
+				
+				{# Assumes you setup the password_reset view in your URLconf #}
+				<p style="text-align:right;font-size:20px;"><a href="{% url 'password_reset' %}" style="color:#3a6342;">Lost password?</a></p>
+			</div>
+			<div class="col-3"></div>
+		</div>
+	</div>
+	
+{% endblock %}

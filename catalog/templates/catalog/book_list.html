@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<h1 class="display-1" style="background-color:white;border-radius:5px;color:#3a6342;">Book List</h1>
+		<p style="text-align:center;font-size:18px;">We have the following books in our Library. And we will keep updating it!</p>
+	</div>
+	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;padding-bottom:10px;border-radius:5px;">
+		{% if book_list %}
+			{% for book in book_list %}
+				{% if forloop.first %}<div class="row" style="padding-top:10px;">{% endif %}
+				<div class="col-4">
+					<div class="list-group">
+						<a href="{{ book.get_absolute_url }}" class="list-group-item list-group-item-action">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">{{ book.title }}</h5>
+							</div>
+							<small>({{ book.author }})</small>				
+						</a>
+					</div>
+				</div>
+				{% if forloop.counter|divisibleby:3 %}</div><div class="row" style="padding-top:10px;">{% endif %}
+  				{% if forloop.last %}</div>{% endif %}
+			{% endfor %}
+		{% else %}
+			<p>There are no books in the library.</p>
+		{% endif %}
+	</div>
+{% endblock %}

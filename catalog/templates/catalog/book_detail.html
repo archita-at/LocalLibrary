@@ -1,0 +1,58 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+  		<h1 class="display-1" style="background-color:white;border-radius:5px;color:#3a6342;padding-bottom:10px;">{{ book.title }}</h1>
+  		<p style="text-align:center;font-size:25px;"> By <a href="{% url 'author-detail' book.author.pk %}" style="color:black;">{{ book.author }}</a></p>
+  	</div>
+
+	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<div class="row">
+			<div class="col-1"></div>	
+			<div class="col-8" style="background-color:white;border-radius:5px;color:#3a6342;padding:10px;padding-left:20px; margin:5px;">
+				<p style="text-align:center;font-size:20px;"><strong>SUMMARY:</strong></p>
+				<p style="font-size:18px;"> {{ book.summary }} </p>
+			</div>
+			<div class="col-2" style="font-size:18px;background-color:white;border-radius:5px;color:#3a6342;padding:10px;margin:5px;">
+				<p><strong>ISBN:</strong> {{ book.isbn }}</p> 
+  				<p><strong>Language:</strong> {{ book.language }}</p>  
+  				<p><strong>Genre:</strong> {{ book.genre.all|join:", " }}</p>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+	
+	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<div class="row" style="margin-top:10px;margin-bottom:10px;">
+			<div class="col-12">
+				<div style="text-align:center;font-size:30px;margin-left:50px;margin-right:50px;border-radius:5px;">COPIES</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row" style="margin-top:20px; margin-bottom:20px;">
+			<div class="col-1"></div>
+			<div class="col-10" style="background-color:white;border-radius:5px;">
+				<table style="width:100%;border-collapse:collapse;margin-bottom:10px;margin-top:10px;">
+			    	<tr style="height:50px;text-align:center;">
+			    		<th style="border: 1px solid #3a6342;">IMPRINT</th>
+			    		<th style="border: 1px solid #3a6342;">ID</th>
+			    		<th style="border: 1px solid #3a6342;">STATUS</th>
+			    	</tr>
+			    	{% for copy in book.bookinstance_set.all %}
+			    	<tr style="height:30px;text-align:center;">
+			    		<td style="border: 1px solid #3a6342;">{{ copy.imprint }}</td>
+			    		<td style="border: 1px solid #3a6342;">{{ copy.id }}</td>
+			    		<td class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}" style="border: 1px solid #3a6342;">
+			    			{{ copy.get_status_display }}
+			    			{% if copy.status != 'a' %}
+			        			<p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
+			      			{% endif %}
+			    		</td>
+			    	</tr>
+			    	{% endfor %}
+			    </table>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+{% endblock %}

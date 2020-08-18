@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		{% block title %}<title>Local Library</title>{% endblock %}
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<!-- Add additional CSS in static file -->
+		{% block stylesheet %}
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+		{% endblock %}
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-2">
+					{% block sidebar %}
+						<span class="navbar-brand">
+							<img src="{% static 'images/books-icon.svg' %}" width="100" height="100" class="d-inline-block align-top" alt="logo">
+							<h5 class="logo-name">LOCAL LIBRARY</h5>
+						</span>
+						<!-- insert default navigation text for every page -->
+						<ul class="nav flex-column">
+							<li class = "nav-item">
+								<a class="nav-link active" href="{% url 'index' %}">Home</a>
+							</li>
+							<li class = "nav-item">
+								<a class="nav-link active" href="{% url 'books' %}">All Books</a>
+							</li>
+							<li class = "nav-item">
+								<a class="nav-link active" href="{% url 'authors' %}">All Authors</a>
+							</li>
+						</ul>
+						<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:10px;">
+							{% if user.is_authenticated %}
+								<p>
+									<div style="text-align:center;color:#3a6342;background-color:rgb(178,219,186);font-size:30px;width:80%;margin-left:10%;">{{ user.get_username }}</div>
+									<hr>
+									<a class="nav-link active" href="{% url 'my-borrowed' %}" style="font-size:20px;text-align:center;">Borrowed Books</a>
+									<a class="nav-link active" href="{% url 'logout' %}?next={{ request.path }}" style="font-size:20px;text-align:center;">Logout</a>
+								</p>
+							{% else %}
+								<a class="nav-link active" href="{% url 'login' %}?next={{request.path}}" style="font-size:20px;">Login/Sign Up</a>
+							{% endif %}
+						</div>
+							{% if user.is_staff %}
+							<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:10px;">
+								<p>
+									<div style="text-align:center;color:#3a6342;background-color:rgb(178,219,186);font-size:30px;width:80%;margin-left:10%;">STAFF</div>
+									<hr>
+									<a class="nav-link active" href="{% url 'all-borrowed' %}" style="font-size:20px;text-align:center;">All Borrowed Books</a>
+								</p>
+							</div>
+							{% endif %}
+					{% endblock %}
+				</div>
+				<div class="col-sm-10">
+					{% block content %}
+						<!-- default content text (typically empty) -->
+					{% endblock %}
+					{% block pagination %}
+						{% if is_paginated %}
+							<div class="pagination">
+								<span class="page-links">
+									{% if page_obj.has_previous %}
+										<a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
+									{% endif %}
+									<span class="page-current">
+										Page {{ page_obj.number }} of {{page_obj.paginator.num_pages }}
+									</span>
+									{% if page_obj.has_next %}
+										<a href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
+									{% endif %}
+								</span>
+							</div>
+						{% endif%}
+					{% endblock %}
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

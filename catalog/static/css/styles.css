@@ -1,0 +1,55 @@
+body{
+	background-color:rgb(178,219,186);		
+}
+
+.sidebar-nav{
+	margin-top: 20px;
+	padding: 0;
+	list-style: none;
+}
+
+.col-sm-2{
+	background-color:#ffe3e4;
+	margin-top:2px;
+}
+
+.navbar-brand{
+	padding-left:14%;
+	padding-right:14%;
+	padding-top:5%;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+.d-inline-block{
+	margin-left:15%;
+}
+
+.logo-name{
+	color:#3a635c;
+	text-align:center;
+	padding-top:2px;
+}
+
+.nav-item{
+	font-size:30px;
+	background-color:rgb(178,219,186);
+	margin-bottom:5px;
+}
+
+.nav-link{
+	color:#3a6342;
+}
+
+.display-1{
+	text-align:center;
+}
+
+.card{
+	margin-top:10px;	
+}
+
+.card-text{
+	text-align:center;
+	font-size:20px;
+}
