@@ -1,21 +1,40 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-	<h1>All Borrowed Books</h1>
+	<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<h1 class="display-1" style="background-color:white;border-radius:5px;color:#3a6342; padding-bottom:10px;">All Borrowed Books</h1>
+	</div>
 	
-	{% if bookinstance_list %}
-	<ul>
-		{% for bookinst in bookinstance_list %}
-		<li class="{% if bookinst.is_overdue %}text-danger{% endif %}">
-			<a href="{% url 'book-detail' bookinst.book.pk %}">{{ bookinst.book.title }}</a> ({{ bookinst.due_back }}) - {{ bookinst.borrower }}
-			{% if perms.catalog.can_mark_returned %}
-				<a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a>  
-			{% endif %}
-		</li>
-		{% endfor %}
-	</ul>
-	{% else %}
-		<p>There are no books borrowed.</p>
-	{% endif %}
-	
+	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<div class = "row" style="margin-top:20px; margin-bottom:20px;">
+			<div class="col-1"></div>
+			<div class="col-10" style="background-color:white;border-radius:5px;">
+				{% if bookinstance_list %}
+				<table style="width:100%;border-collapse:collapse;margin-bottom:10px;margin-top:10px;">
+					<tr style="height:50px;text-align:center;">
+						<th style="border: 1px solid #3a6342;">BOOK TITLE</th>
+						<th style="border: 1px solid #3a6342;">DUE BACK DATE</th>
+						<th style="border: 1px solid #3a6342;">BORROWER</th>
+						<th style="border: 1px solid #3a6342;">RENEW BUTTON</th>
+					</tr>
+					{% for bookinst in bookinstance_list %}
+					<tr class="{% if bookinst.is_overdue %}text-danger{% endif %}" style="height:30px;text-align:center;">
+						<td style="border: 1px solid #3a6342;"><a href="{% url 'book-detail' bookinst.book.pk %}">{{ bookinst.book.title }}</a></td>
+						<td style="border: 1px solid #3a6342;">{{ bookinst.due_back }}</td>
+						<td style="border: 1px solid #3a6342;">{{ bookinst.borrower }}</td>
+						<td style="border: 1px solid #3a6342;">
+							{% if perms.catalog.can_mark_returned %}
+								<a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a>  
+							{% endif %}
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+				{% else %}
+					<p style="text-align:center; font-size:30px; padding-top:5px; color:#3a6342;">There are no books borrowed.</p>
+				{% endif %}
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>				
 {% endblock %}

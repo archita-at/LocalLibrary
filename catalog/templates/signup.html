@@ -1,22 +1,39 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-		<h2>Sign up Form</h2>
-		<form method="post">
-		  {% csrf_token %}
-		  {% for field in form %}
-		    <p>
-		      {{ field.label_tag }}
-		      {{ field }}<br>
-		      {% if field.help_text %}
-		        <small style="color: grey">{{ field.help_text }}</small>
-		      {% endif %}
-		      {% for error in field.errors %}
-		        <p style="color: red">{{ error }}</p>
-		      {% endfor %}
-		    </p>
-		  {% endfor %}
-		  <button type="submit">Sign up</button>
-		</form>
+	<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<h1 class="display-1" style="background-color:white;border-radius:5px;color:#3a6342; padding-bottom:10px;">Sign up Form</h1>
+	</div>
+	
+	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<div class = "row" style="margin-top:20px; margin-bottom:20px;">
+			<div class="col-1"></div>
+			<div class="col-10" style="background-color:white;border-radius:5px;">
+				<form method="post">
+				  {% csrf_token %}
+				  {% for field in form %}
+				    <table style="width:100%;margin-bottom:10px;margin-top:10px; color:#3a6342;">
+				    	<tr style="height:30px; font-size:20px;">
+				    		<td style="text-align:right; width:30%; padding:2px;">{{ field.label_tag }}</td>
+				    		<td style="width:20%; padding:2px;">{{ field }}</td>
+				    		<td style="text-align:left; padding:2px; padding-left:5px;">
+				    			{% if field.help_text %}
+						        	<small style="color: grey; font-size:12px;">{{ field.help_text }}</small>
+						      	{% endif %}
+				    		</td>
+				    	</tr>
+				    </table>   
+				    {% for error in field.errors %}
+				    	<p style="color: red">{{ error }}</p>
+				    {% endfor %}
+				  {% endfor %}
+				  <button class="nav-link active" type="submit" style="margin-left:40%; margin-bottom:10px; font-size:20px;background-color:white;border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px; cursor:pointer;">Sign up</button>
+				</form>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
+	
+				
 {% endblock %}
 

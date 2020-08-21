@@ -6,12 +6,17 @@
 		<p style="text-align:center;font-size:18px;">We have the following books in our Library. And we will keep updating it!</p>
 	</div>
 	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;padding-bottom:10px;border-radius:5px;">
+		{% if user.is_staff %}
+			<nav class="nav">
+				<a class="nav-link active" href="{% url 'book_create' %}" style="padding-left:80%; font-size:20px;">+ Add New Book</a>
+			</nav>
+		{% endif %}
 		{% if book_list %}
 			{% for book in book_list %}
 				{% if forloop.first %}<div class="row" style="padding-top:10px;">{% endif %}
 				<div class="col-4">
 					<div class="list-group">
-						<a href="{{ book.get_absolute_url }}" class="list-group-item list-group-item-action">
+						<a href="{{ book.get_absolute_url }}" class="list-group-item list-group-item-action" style="height:100px;">
 							<div class="d-flex w-100 justify-content-between">
 								<h5 class="mb-1">{{ book.title }}</h5>
 							</div>
