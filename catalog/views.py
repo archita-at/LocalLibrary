@@ -57,10 +57,23 @@ class BookDetailView(generic.DetailView):
     
 class AuthorListView(generic.ListView):
     model = Author
-    paginate_by = 10
+    paginate_by = 12
     
 class AuthorDetailView(generic.DetailView):
     model = Author
+    
+# def ProfileView(request, pk):
+#     profile = request.user
+#     
+#     if request.method == 'GET':
+#         first_name = profile['first_name']
+#         last_name = profile['last_name']
+#         
+#         context = {
+#             'first_name': first_name,
+#             'last_name': last_name,
+#         }
+#         return render(request, 'profile.html', context = context)
     
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view listing books on loan to current user."""
@@ -116,7 +129,7 @@ def renew_book_librarian(request, pk):
 class AuthorCreate(CreateView):
     model = Author
     fields = '__all__'
-    initial = {'date_of_death': '05/01/2018'}
+    initial = {'date_of_death': datetime.date.today()}
 
 class AuthorUpdate(UpdateView):
     model = Author
@@ -139,6 +152,10 @@ class BookUpdate(UpdateView):
 class BookDelete(DeleteView):
     model = Book
     success_url = reverse_lazy('books')
+    
+class BookInstanceCreate(CreateView):
+    model = BookInstance
+    fields = ['book', 'imprint', 'due_back', 'borrower']
     
 def signup_view(request):
     form = SignUpForm(request.POST)

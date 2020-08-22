@@ -5,6 +5,11 @@
 		<h1 class="display-1" style="background-color:white;border-radius:5px;color:#3a6342; padding-bottom:10px;">Author List</h1>
 	</div>
 	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;padding-bottom:10px;border-radius:5px;">
+		{% if user.is_staff %}
+			<nav class="nav">
+				<a class="nav-link active" href="{% url 'author_create' %}" style="padding-left:80%; font-size:20px;">+ Add New Author</a>
+			</nav>
+		{% endif %}
 		{% if author_list %}
 			{% for author in author_list %}
 				{% if forloop.first %}<div class="row" style="padding-top:10px;">{% endif %}

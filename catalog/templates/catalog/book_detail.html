@@ -29,6 +29,11 @@
 			</div>
 		</div>
 		<hr>
+		{% if user.is_staff %}
+			<nav class="nav">
+				<a class="nav-link active" href="{% url 'book_instance_create' %}" style="padding-left:70%; font-size:20px;">+ Add New Book Copy</a>
+			</nav>
+		{% endif %}
 		<div class="row" style="margin-top:20px; margin-bottom:20px;">
 			<div class="col-1"></div>
 			<div class="col-10" style="background-color:white;border-radius:5px;">
