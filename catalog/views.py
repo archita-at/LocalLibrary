@@ -1,4 +1,5 @@
 import datetime
+import pandas as pd
 
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
@@ -11,9 +12,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin,\
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.models import User
 
-from catalog.forms import RenewBookForm, SignUpForm
+from catalog.forms import RenewBookForm, SignUpForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,authenticate
+
+from .recommendations import get_recommendations, get_title_from_index
 
 # Create your views here.
 #@login_required
@@ -62,18 +65,11 @@ class AuthorListView(generic.ListView):
 class AuthorDetailView(generic.DetailView):
     model = Author
     
-# def ProfileView(request, pk):
-#     profile = request.user
-#     
-#     if request.method == 'GET':
-#         first_name = profile['first_name']
-#         last_name = profile['last_name']
-#         
-#         context = {
-#             'first_name': first_name,
-#             'last_name': last_name,
-#         }
-#         return render(request, 'profile.html', context = context)
+class ProfileView(LoginRequiredMixin, generic.DetailView):
+    model = Profile
+    
+    def get_object(self):
+        return Profile.objects.filter(user = self.request.user)[0]
     
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view listing books on loan to current user."""
@@ -155,7 +151,17 @@ class BookDelete(DeleteView):
     
 class BookInstanceCreate(CreateView):
     model = BookInstance
-    fields = ['book', 'imprint', 'due_back', 'borrower']
+    fields = ['book', 'imprint','status', 'due_back', 'borrower']
+    success_url = reverse_lazy('books')
+    
+class BookInstanceUpdate(UpdateView):
+    model = BookInstance
+    fields = '__all__'
+    success_url = reverse_lazy('all-borrowed')
+    
+class BookInstanceDelete(DeleteView):
+    model = BookInstance
+    success_url = reverse_lazy('books')
     
 def signup_view(request):
     form = SignUpForm(request.POST)
@@ -176,5 +182,37 @@ def signup_view(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+def profileUpdate_view(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance = request.user)
+        profile_form = ProfileUpdateForm(request.POST, instance = request.user.profile)
+        
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile')
+        
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+            
+    context = {
+        'u_form': user_form,
+        'p_form': profile_form,
+    }
     
+    return render(request, 'catalog/profile_update.html', context)
+
+def search_book(request):
+    book_name_to_be_searched = request.POST.get('search_box')
     
+    recommendations = get_recommendations(book_name_to_be_searched)
+        
+    print(recommendations)
+    for book in recommendations:
+        print(book)
+    context = {
+        'recommendations': recommendations,
+    }
+    
+    return render(request, "catalog/book_search.html", context)

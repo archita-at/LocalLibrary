@@ -73,7 +73,7 @@ class BookInstance(models.Model):
         max_length = 1,
         choices = LOAN_STATUS,
         blank = True,
-        default = 'm',
+        default = 'a',
         help_text = 'Book Availability',
     )
     
@@ -115,7 +115,6 @@ class Profile(models.Model):
     
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
-    if not created:
-        return
-    Profile.objects.create(user=instance)
+    if instance and  created:
+        Profile.objects.create(user=instance)
     instance.profile.save()

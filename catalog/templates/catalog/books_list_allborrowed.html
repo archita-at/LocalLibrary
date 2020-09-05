@@ -16,6 +16,7 @@
 						<th style="border: 1px solid #3a6342;">DUE BACK DATE</th>
 						<th style="border: 1px solid #3a6342;">BORROWER</th>
 						<th style="border: 1px solid #3a6342;">RENEW BUTTON</th>
+						<th style="border: 1px solid #3a6342;">UPDATE BUTTON</th>
 					</tr>
 					{% for bookinst in bookinstance_list %}
 					<tr class="{% if bookinst.is_overdue %}text-danger{% endif %}" style="height:30px;text-align:center;">
@@ -27,6 +28,9 @@
 								<a href="{% url 'renew-book-librarian' bookinst.id %}">Renew</a>  
 							{% endif %}
 						</td>
+						{% if user.is_staff %}
+						<td style="border: 1px solid #3a6342;"><a href="{% url 'book_instance_update' bookinst.id %}">Update</a></td>
+						{% endif %}
 					</tr>
 					{% endfor %}
 				</table>

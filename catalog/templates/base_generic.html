@@ -35,7 +35,7 @@
 						<div style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:10px;">
 							{% if user.is_authenticated %}
 								<p>
-									<div style="text-align:center;color:#3a6342;background-color:rgb(178,219,186);font-size:30px;width:80%;margin-left:10%;">{{ user.get_username }}</div>
+									<div style="text-align:center;background-color:rgb(178,219,186);font-size:26px;width:80%;margin-left:10%;"><a class="nav-link active" href="{% url 'profile' %}">{{ user.get_username }}</a></div>
 									<hr>
 									<a class="nav-link active" href="{% url 'my-borrowed' %}" style="font-size:20px;text-align:center;">Borrowed Books</a>
 									<a class="nav-link active" href="{% url 'logout' %}?next={{ request.path }}" style="font-size:20px;text-align:center;">Logout</a>

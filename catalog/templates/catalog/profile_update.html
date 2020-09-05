@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	<div class="content-section">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.email }}</p>
+        </div>
+        <form method="POST" enctype = "multipart/form-data">
+        {% csrf_token %}
+        	<h1>Profile Info</h1>
+        	<table>
+        		{{ u_form.as_table }}
+        	</table>
+            <table>
+            	{{ p_form.as_table }}
+            </table>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+        </form>
+     </div>
+{% endblock %}

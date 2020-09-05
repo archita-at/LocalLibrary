@@ -7,6 +7,12 @@
   	</div>
 
 	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		{% if user.is_staff %}
+			<nav class="nav">
+				<a class="nav-link active" href="{% url 'book_update' book.pk %}" style="padding-left:70%; font-size:20px;">Update Book</a>
+				<a class="nav-link active" href="{% url 'book_delete' book.pk %}" style="font-size:20px; color:red;">Delete Book</a>
+			</nav>
+		{% endif %}
 		<div class="row">
 			<div class="col-1"></div>	
 			<div class="col-8" style="background-color:white;border-radius:5px;color:#3a6342;padding:10px;padding-left:20px; margin:5px;">
@@ -42,6 +48,9 @@
 			    		<th style="border: 1px solid #3a6342;">IMPRINT</th>
 			    		<th style="border: 1px solid #3a6342;">ID</th>
 			    		<th style="border: 1px solid #3a6342;">STATUS</th>
+			    		{% if user.is_staff %}
+			    		<th style="border: 1px solid #3a6342;">DELETE BUTTON</th>
+			    		{% endif %}
 			    	</tr>
 			    	{% for copy in book.bookinstance_set.all %}
 			    	<tr style="height:30px;text-align:center;">
@@ -52,7 +61,12 @@
 			    			{% if copy.status != 'a' %}
 			        			<p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
 			      			{% endif %}
+			    		</td >
+			    		{% if user.is_staff %}
+			    		<td style="border: 1px solid #3a6342;">
+			    			<a href="{% url 'book_instance_delete' copy.id %}">Delete Book Copy</a>
 			    		</td>
+			    		{% endif %}
 			    	</tr>
 			    	{% endfor %}
 			    </table>

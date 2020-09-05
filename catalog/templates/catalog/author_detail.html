@@ -10,6 +10,12 @@
 			  <p style="text-align:center;font-size:25px;">{{ author.date_of_birth }}</p>
 			{% endif %}
   		</p>
+  		{% if user.is_staff %}
+			<nav class="nav">
+				<a class="nav-link active" href="{% url 'author_update' author.pk %}" style="padding-left:70%; font-size:20px;">Update Author</a>
+				<a class="nav-link active" href="{% url 'author_delete' author.pk %}" style="font-size:20px; color:red;">Delete Author</a>
+			</nav>
+		{% endif %}
   	</div>
   	
   	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">

@@ -1,0 +1,7 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+	{% for book in recommendations %}
+		<p>{{ book.title }}<p>
+	{% endfor %}
+{% endblock %}
