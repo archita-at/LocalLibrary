@@ -1,7 +1,27 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-	{% for book in recommendations %}
-		<p>{{ book.title }}<p>
-	{% endfor %}
+	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<div class="row" style="margin-top:10px;margin-bottom:10px;">
+			<div class="col-12">
+				<div style="text-align:center;font-size:30px;margin-left:50px;margin-right:50px;border-radius:5px;">Search Results</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row" style="padding-top:10px;">
+			{% for book in recommendations %}
+			<div class="col-4">
+				<div class="list-group">
+					<a href="{{ book.get_absolute_url }}" class="list-group-item list-group-item-action" style="height:100px;">
+						<div class="d-flex w-100 justify-content-between">
+							<h5 class="mb-1">{{ book.title }}</h5>
+						</div>
+						<small>({{ book.author }})</small>				
+					</a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	
 {% endblock %}

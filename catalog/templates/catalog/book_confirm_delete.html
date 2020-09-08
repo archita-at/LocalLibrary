@@ -1,14 +1,24 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-
-<h1>Delete Book</h1>
-
-<p>Are you sure you want to delete the book: {{ book }}?</p>
-
-<form action="" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="Yes, delete.">
-</form>
+	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;padding:5px;margin-bottom:10px;margin-top:2px;">
+		<div class="row" style="margin-top:10px;margin-bottom:10px;">
+			<div class="col-12">
+				<div style="text-align:center;font-size:30px;margin-left:50px;margin-right:50px;border-radius:5px;">Delete Confirmation</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row" style="margin-top:20px; margin-bottom:20px;">
+			<div class="col-1"></div>
+			<div class="col-10" style="background-color:white;border-radius:5px;">
+				<p style="text-align:center;font-size:25px;">Are you sure you want to delete the book: {{ book }}?</p>
+				<form action="" method="POST">
+  					{% csrf_token %}
+  					<input class="nav-link active" type="submit" value="Yes, delete." style="width:20%; font-size:20px;background-color:white;border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px; cursor:pointer;margin-bottom:10px;margin-left:40%;">
+				</form>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
 
 {% endblock %}

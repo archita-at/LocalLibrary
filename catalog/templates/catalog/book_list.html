@@ -7,15 +7,15 @@
 	</div>
 	<div class="container" style="border-style:solid;border-color:#3a6342;border-width:1px;padding-bottom:10px;border-radius:5px;">
 		{% if user.is_staff %}
-			<nav class="nav">
+			<nav class="nav" >
 				<span>
-					<form action=/catalog/search_book/ method=post>
+					<form action=/catalog/search_book/ method=post style="margin:10px;">
 					{% csrf_token %}
-						<input type="text" name="search_box" placeholder="Search">
-            			<input type="submit" name="search_btn" value="SEARCH">
+						<input type="text" name="search_box" placeholder="Search Book" style="font-size:18px;border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;">
+            			<input type="submit" name="search_btn" value="SEARCH" style="font-size:18px;background-color:white;border-style:solid;border-color:#3a6342;border-width:1px;border-radius:5px;cursor:pointer;">
 					</form>
 				</span>
-				<a class="nav-link active" href="{% url 'book_create' %}" style="padding-left:80%; font-size:20px;">+ Add New Book</a>
+				<a class="nav-link active" href="{% url 'book_create' %}" style="padding-left:55%; font-size:20px;">+ Add New Book</a>
 			</nav>
 		{% endif %}
 		{% if book_list %}
