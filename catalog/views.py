@@ -152,7 +152,15 @@ class BookDelete(DeleteView):
 class BookInstanceCreate(CreateView):
     model = BookInstance
     fields = ['book', 'imprint','status', 'due_back', 'borrower']
-    success_url = reverse_lazy('books')
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        initial['book'] = Book.objects.get(id = (self.request.META.get('HTTP_REFERER')[-1]))
+        return initial
+    
+    def get_success_url(self):
+        book_id = (Book.objects.get(title = self.object.book)).id
+        return reverse_lazy('book-detail', kwargs = {'pk':book_id})
     
 class BookInstanceUpdate(UpdateView):
     model = BookInstance
@@ -162,6 +170,10 @@ class BookInstanceUpdate(UpdateView):
 class BookInstanceDelete(DeleteView):
     model = BookInstance
     success_url = reverse_lazy('books')
+    
+    def get_success_url(self):
+        book_id = (Book.objects.get(title = self.object.book)).id
+        return reverse_lazy('book-detail', kwargs = {'pk':book_id})
     
 def signup_view(request):
     form = SignUpForm(request.POST)
