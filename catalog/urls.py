@@ -1,5 +1,4 @@
-from django.urls import path
-from django.conf.urls import url
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -25,11 +24,11 @@ urlpatterns = [
     path('book/<int:pk>/update/', views.BookUpdate.as_view(), name='book_update'),
     path('book/<int:pk>/delete/', views.BookDelete.as_view(), name='book_delete'),
     
-    path('bookInstance/create/', views.BookInstanceCreate.as_view(), name='book_instance_create'),
+    path('book/<int:pk>/instance/create/', views.BookInstanceCreate.as_view(), name='book_instance_create'),
     path('book/<uuid:pk>/update', views.BookInstanceUpdate.as_view(), name ='book_instance_update'),
     path('book/<uuid:pk>/delete', views.BookInstanceDelete.as_view(), name='book_instance_delete'),
     
     path('signup/', views.signup_view, name='signup'),
     
-    url(r'^search_book', views.search_book),
+    re_path(r'^search_book', views.search_book),
 ]

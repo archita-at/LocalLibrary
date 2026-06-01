@@ -151,17 +151,17 @@ class BookDelete(DeleteView):
     
 class BookInstanceCreate(CreateView):
     model = BookInstance
-    fields = ['book', 'imprint','status', 'due_back', 'borrower']
+    fields = ['imprint','status', 'due_back', 'borrower']
     
-    def get_initial(self):
-        initial = super().get_initial()
-        initial['book'] = Book.objects.get(id = (self.request.META.get('HTTP_REFERER')[-1]))
-        return initial
+    def form_valid(self, form):
+        form.instance.book = get_object_or_404(
+            Book,
+            pk=self.kwargs['pk']
+        )
+        return super().form_valid(form)
     
     def get_success_url(self):
-        book_id = (Book.objects.get(title = self.object.book)).id
-        return reverse_lazy('book-detail', kwargs = {'pk':book_id})
-    
+        return self.object.book.get_absolute_url();
 class BookInstanceUpdate(UpdateView):
     model = BookInstance
     fields = '__all__'
