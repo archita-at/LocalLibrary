@@ -38,7 +38,10 @@
 									<div style="text-align:center;background-color:rgb(178,219,186);font-size:26px;width:80%;margin-left:10%;"><a data-testid="username" class="nav-link active" href="{% url 'profile' %}">{{ user.get_username }}</a></div>
 									<hr>
 									<a class="nav-link active" href="{% url 'my-borrowed' %}" style="font-size:20px;text-align:center;">Borrowed Books</a>
-									<a class="nav-link active" href="{% url 'logout' %}?next={{ request.path }}" style="font-size:20px;text-align:center;">Logout</a>
+									<form action="{% url 'logout' %}" method="post" style="text-align:center;font-size:26px;width:80%;margin-left:10%;">
+										{% csrf_token %}
+										<button class="border-0 nav-link active" style="background-color:rgb(178,219,186);text-align:center;width:80%;margin-left:10%;">Logout</button>
+									</form>
 								</p>
 							{% else %}
 								<a class="nav-link active" href="{% url 'login' %}?next={{request.path}}" style="font-size:20px;">Login/Sign Up</a>
