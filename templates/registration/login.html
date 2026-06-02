@@ -2,7 +2,7 @@
 
 {% block content %}
 	{% if form.errors %}
-		<p style="text-align:center;color:red;font-size:20px;">Your username and password didn't match. Please try again.</p>
+		<p id="validation-error" style="text-align:center;color:red;font-size:20px;">Your username and password didn't match. Please try again.</p>
 	{% endif %}
 	
 	{% if next %}
