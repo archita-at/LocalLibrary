@@ -5,9 +5,9 @@
   		<h1 class="display-1" style="background-color:white;border-radius:5px;color:#3a6342;padding-bottom:10px;">{{ author.first_name }} {{ author.last_name }}</h1>
   		<p>
   			{% if author.date_of_death %} 
-			  <p style="text-align:center;font-size:25px;">{{ author.date_of_birth }} - {{ author.date_of_death }}</p>
+			  <p id="author-dob-and-dod" style="text-align:center;font-size:25px;">{{ author.date_of_birth }} - {{ author.date_of_death }}</p>
 			{% else %}
-			  <p style="text-align:center;font-size:25px;">{{ author.date_of_birth }}</p>
+			  <p id="author-dob-and-dod" style="text-align:center;font-size:25px;">{{ author.date_of_birth }}</p>
 			{% endif %}
   		</p>
   		{% if user.is_staff %}
