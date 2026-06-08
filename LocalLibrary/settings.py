@@ -84,8 +84,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'automation': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'automationdb.sqlite3'),
     }
 }
+
+if os.environ.get('RUNNING_AUTOMATION') == 'True':
+    DATABASES = {'default': DATABASES['automation']}
+    print("⚠️  CRITICAL: Django is connected to the AUTOMATION DATABASE.")
+else:
+    DATABASES = {'default': DATABASES['default']}
 
 
 # Password validation
