@@ -12,8 +12,8 @@
   		</p>
   		{% if user.is_staff %}
 			<nav class="nav">
-				<a class="nav-link active" href="{% url 'author_update' author.pk %}" style="padding-left:70%; font-size:20px;">Update Author</a>
-				<a class="nav-link active" href="{% url 'author_delete' author.pk %}" style="font-size:20px; color:red;">Delete Author</a>
+				<a data-testid="update-author-link" class="nav-link active" href="{% url 'author_update' author.pk %}" style="padding-left:70%; font-size:20px;">Update Author</a>
+				<a data-testid="delete-author-link" class="nav-link active" href="{% url 'author_delete' author.pk %}" style="font-size:20px; color:red;">Delete Author</a>
 			</nav>
 		{% endif %}
   	</div>
